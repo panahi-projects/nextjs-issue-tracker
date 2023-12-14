@@ -6,14 +6,14 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Issue {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  description String   @db.Text
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
   status      Status   @default(OPEN)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
