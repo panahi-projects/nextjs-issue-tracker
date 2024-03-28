@@ -10,7 +10,6 @@ const IssueDetailPage = async ({ params }: Props) => {
   const issue = await prisma.issue.findUnique({ where: { id: params.id } });
 
   if (!issue) notFound();
-
   return (
     <div>
       <Heading>{issue.title}</Heading>
