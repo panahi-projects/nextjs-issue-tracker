@@ -5,6 +5,9 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import IssueEditButton from "../_components/IssueEditButton";
+import IssueDeleteButton from "../_components/IssueDeleteButton";
+import IssueDetails from "../_components/IssueDetails";
 
 interface Props {
   params: { id: string };
@@ -14,24 +17,15 @@ const IssueDetailPage = async ({ params }: Props) => {
 
   if (!issue) notFound();
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap={"5"}>
-      <Box>
-        <Heading>{issue.title}</Heading>
-        <Flex gap="4" my="4">
-          <IssueStatusBadge status={issue.status} />
-          <Text size="1">{issue.createdAt.toDateString()}</Text>
-        </Flex>
-        <Card className="prose">
-          <ReactMarkdown>{issue.description}</ReactMarkdown>
-        </Card>
+    <Grid columns={{ initial: "1", sm: "5" }} gap={"5"}>
+      <Box className="md:col-span-4">
+        <IssueDetails issue={issue} />
       </Box>
       <Box>
-        <Link href={`/issues/${issue.id}/edit`}>
-          <Button>
-            <Pencil2Icon />
-            Edit issue
-          </Button>
-        </Link>
+        <Flex direction={"column"} gap={"3"}>
+          <IssueEditButton issue={issue} />
+          <IssueDeleteButton />
+        </Flex>
       </Box>
     </Grid>
   );
