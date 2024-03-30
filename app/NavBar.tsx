@@ -13,7 +13,7 @@ const NavBar = () => {
     },
     {
       label: "Issues",
-      href: "/issues",
+      href: "/issues/list",
     },
   ];
   const currentPath = usePathname();
