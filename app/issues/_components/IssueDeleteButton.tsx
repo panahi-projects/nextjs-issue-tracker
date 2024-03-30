@@ -2,8 +2,24 @@
 
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import { TrashIcon } from "@radix-ui/react-icons";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-const IssueDeleteButton = () => {
+const IssueDeleteButton = ({ issueId }: { issueId: string }) => {
+  const router = useRouter();
+
+  const onDelete = async () => {
+    try {
+      console.log({ issueId });
+
+      await axios.delete("/api/issues/" + issueId);
+      router.push("/issues");
+      router.refresh();
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
@@ -26,7 +42,9 @@ const IssueDeleteButton = () => {
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button color="red">Delete Issue</Button>
+            <Button color="red" onClick={onDelete}>
+              Delete Issue
+            </Button>
           </AlertDialog.Action>
         </Flex>
       </AlertDialog.Content>
